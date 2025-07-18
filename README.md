@@ -1,4 +1,5 @@
 # crudoperations
+<<<<<<< HEAD
 
 Create User
 Endpoint: POST /api/users
@@ -33,3 +34,6 @@ MySQL (DB)
 Postman for testing
 
 
+=======
+# crudoperations
+>>>>>>> 179bee5 (first commit)
