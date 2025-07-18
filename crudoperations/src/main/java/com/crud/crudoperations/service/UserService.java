@@ -1,11 +1,12 @@
 package com.crud.crudoperations.service;
+
 import com.crud.crudoperations.model.User;
 import com.crud.crudoperations.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 import java.util.Optional;
 import java.util.List;
@@ -49,7 +50,6 @@ public class UserService {
             return false;
         }
     }
-
     public List<User> searchUsers(String name, String email, String mobile) {
         if (name != null && email != null) {
             return userRepository.findByNameContainingIgnoreCaseAndEmailContainingIgnoreCase(name, email);
@@ -63,12 +63,9 @@ public class UserService {
             return userRepository.findAll(); // Return all if no query params
         }
     }
-    // UserService.java
-
     public List<User> searchUsers(String name, String email, int page, int limit, String sortBy, String order) {
         Sort.Direction direction = order.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
         Pageable pageable = PageRequest.of(page, limit, Sort.by(direction, sortBy));
-
 
         if (name != null && email != null) {
             return userRepository.findByNameContainingIgnoreCaseAndEmailContainingIgnoreCase(name, email, pageable).getContent();
@@ -80,5 +77,4 @@ public class UserService {
             return userRepository.findAll(pageable).getContent(); // if no filters, return all paginated
         }
     }
-
 }
