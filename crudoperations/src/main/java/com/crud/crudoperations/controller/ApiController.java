@@ -54,12 +54,34 @@ public class ApiController {
         HashMap<String, String> hashmap = new HashMap<>();
 
         if (deleted) {
-             hashmap.put("message", "success");
+            hashmap.put("message", "success");
             return ResponseEntity.ok(hashmap);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("User not found with ID: " + id);
         }
     }
+    @GetMapping("/users/search")
+    public List<User> searchUsers(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String mobile) {
+        return userService.searchUsers(name, email, mobile);
+    }
+    // ApiController.java
+
+    @GetMapping("/search")
+    public ResponseEntity<List<User>> searchUsers(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String email,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int limit,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String order){
+
+        List<User> users = userService.searchUsers(name, email, page, limit, sortBy, order);
+        return ResponseEntity.ok(users);
+    }
+
 
 }
